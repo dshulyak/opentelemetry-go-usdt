@@ -9,4 +9,4 @@ void stacks_enter(uint64_t span_id,
                   uint64_t amount,
                   const char *span_name);
 
-void stacks_exit(uint64_t span_id);
+void stacks_close(uint64_t span_id);

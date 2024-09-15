@@ -1,13 +1,7 @@
 use std::os::raw::c_char;
-use std::ffi::CStr;
 
 #[no_mangle]
-pub extern "C" fn stacks_enter(span_id: u64, parent_span_id: u64, id: u64, amount: u64, span_name: *const c_char) {
-    let span_name = unsafe {
-        assert!(!span_name.is_null());
-        CStr::from_ptr(span_name).to_str().unwrap()
-    };
-    
+pub extern "C" fn stacks_enter(span_id: u64, parent_span_id: u64, id: u64, amount: u64, span_name: *const c_char) {    
     probe::probe!(
         stacks_tracing,
         enter,
@@ -15,15 +9,15 @@ pub extern "C" fn stacks_enter(span_id: u64, parent_span_id: u64, id: u64, amoun
         parent_span_id,
         id,
         amount,
-        span_name.as_ptr()
+        span_name
     );
 }
 
 #[no_mangle]
-pub extern "C" fn stacks_exit(span_id: u64) {
+pub extern "C" fn stacks_close(span_id: u64) {
     probe::probe!(
         stacks_tracing,
-        exit,
+        close,
         span_id
     );
 }

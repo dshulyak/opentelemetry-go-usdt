@@ -36,7 +36,7 @@ func (u *USDTTracer) OnStart(parent context.Context, s sdktrace.ReadWriteSpan) {
 
 func (u *USDTTracer) OnEnd(s sdktrace.ReadOnlySpan) {
 	spanId := s.SpanContext().SpanID()
-	C.stacks_exit(C.ulong(binary.BigEndian.Uint64(spanId[:])))
+	C.stacks_close(C.ulong(binary.BigEndian.Uint64(spanId[:])))
 }
 
 func (u *USDTTracer) ForceFlush(ctx context.Context) error {
