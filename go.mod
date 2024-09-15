@@ -1,11 +1,9 @@
-module opentelemtry-go-usdt
+module github.com/dshulyak/opentelemetry-go-usdt
 
 go 1.22.7
 
 require (
-	github.com/mmcshane/salp v1.0.0-beta.1
 	go.opentelemetry.io/otel v1.30.0
-	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.30.0
 	go.opentelemetry.io/otel/sdk v1.30.0
 )
 

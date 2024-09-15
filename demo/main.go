@@ -7,22 +7,16 @@ import (
 
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 
-	usdt "opentelemtry-go-usdt"
+	usdt "github.com/dshulyak/opentelemetry-go-usdt"
 )
 
 func initTracer() (*sdktrace.TracerProvider, error) {
 	// Create stdout exporter
-	exporter, err := stdouttrace.New(stdouttrace.WithPrettyPrint())
-	if err != nil {
-		return nil, err
-	}
 
 	// Create TracerProvider with USDT and stdout processors
 	tp := sdktrace.NewTracerProvider(
-		sdktrace.WithBatcher(exporter),
 		sdktrace.WithSpanProcessor(usdt.New()),
 	)
 
@@ -42,7 +36,6 @@ func main() {
 			log.Printf("Error shutting down tracer provider: %v", err)
 		}
 	}()
-
 	tracer := tp.Tracer("demo-tracer")
 
 	ctx, span := tracer.Start(context.Background(), "parent")
